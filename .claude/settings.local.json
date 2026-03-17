@@ -1,7 +1,29 @@
 {
   "permissions": {
     "allow": [
-      "Bash(unzip -P \"123456@!!Z\" -o FishThunder.zip -d FishThunder_extracted)"
+      "Bash(unzip -P \"123456@!!Z\" -o FishThunder.zip -d FishThunder_extracted)",
+      "Bash(cmd.exe /c \"attrib C:\\\\xampp\\\\mysql\\\\data\\\\ibdata1\" 2>&1)",
+      "Bash(powershell.exe -Command \"Get-Service | Where-Object {$_.Name -like '*mysql*' -or $_.Name -like '*maria*' -or $_.Name -like '*xampp*'}\" 2>&1)",
+      "Bash(powershell -Command \"Get-Service -Name ''*mysql*'' -ErrorAction SilentlyContinue | Select-Object Name,Status\")",
+      "Bash(powershell -Command \"Get-Service -Name ''*maria*'' -ErrorAction SilentlyContinue | Select-Object Name,Status\")",
+      "Bash(/c/xampp/mysql/bin/mysql --user=root --host=127.0.0.1 --port=3306 -e \"SELECT VERSION\\(\\);\" 2)",
+      "Bash(1 netstat:*)",
+      "Bash(head -20 tasklist /FI \"IMAGENAME eq mysqld.exe\" 2)",
+      "Bash(1 tasklist:*)",
+      "Bash(netstat -ano)",
+      "Bash(/c/xampp/mysql/bin/mysql --user=root --host=127.0.0.1 --port=3306 -e \"SELECT VERSION\\(\\);\" 2>&1)",
+      "Bash(cmd.exe /c \"icacls \\\\\"C:\\\\xampp\\\\mysql\\\\data\\\\\" /grant \\\\\"%USERNAME%:\\(OI\\)\\(CI\\)F\\\\\" /T 2>&1\")",
+      "Bash(cmd.exe /c \"icacls \"\"C:\\\\xampp\\\\mysql\\\\data\"\" /grant \"\"usama:\\(OI\\)\\(CI\\)F\"\" /T\")",
+      "Bash(echo \"exit: $?\")",
+      "Bash(/c/xampp/php/php artisan:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8000/login 2)",
+      "Bash(1 curl:*)",
+      "Bash(grep -v \"^$\")",
+      "Bash(cmd.exe /c \"echo 127.0.0.1 www.localhost >> C:\\\\Windows\\\\System32\\\\drivers\\\\etc\\\\hosts\" 2)",
+      "Bash(1 cmd.exe /c \"echo 127.0.0.1 admin.localhost >> C:\\\\Windows\\\\System32\\\\drivers\\\\etc\\\\hosts\" 2)",
+      "Bash(1 cat:*)",
+      "Bash(for f:*)",
+      "Bash(do echo:*)"
     ]
   }
 }

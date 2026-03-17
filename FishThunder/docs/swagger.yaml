@@ -1,0 +1,3151 @@
+openapi: 3.0.0
+info:
+  title: FishThunder Casino Platform API
+  description: >
+    Complete REST API specification for the FishThunder Casino Platform.
+    Authentication is performed via JWT Bearer tokens obtained from POST /api/login.
+    Some legacy endpoints use a body-level `token` field instead of the Authorization header.
+  version: 1.0.0
+  contact:
+    name: FishThunder Platform
+
+servers:
+  - url: http://www.localhost:8000
+    description: Local development server
+  - url: http://www.fishglory.xyz
+    description: Production server
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+
+    # ─── Generic Responses ───────────────────────────────────────────────────
+
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Error message"
+
+    PaginationMeta:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            total:
+              type: integer
+            count:
+              type: integer
+            per_page:
+              type: integer
+            current_page:
+              type: integer
+            total_pages:
+              type: integer
+            links:
+              type: object
+
+    # ─── Auth ─────────────────────────────────────────────────────────────────
+
+    LoginRequest:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          description: Username or email address
+          example: "john_doe"
+        password:
+          type: string
+          format: password
+          example: "secret123"
+
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: JWT access token
+          example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+
+    LogoutRequest:
+      type: object
+      required:
+        - username
+        - token
+      properties:
+        username:
+          type: string
+          example: "john_doe"
+        token:
+          type: string
+          example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+
+    # ─── User ─────────────────────────────────────────────────────────────────
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 42
+        username:
+          type: string
+          example: "player123"
+        email:
+          type: string
+          format: email
+          example: "player@example.com"
+        first_name:
+          type: string
+          example: "John"
+        role_id:
+          type: integer
+          description: "1=User, 2=Cashier, 3=Manager, 4=Distributor, 5=Agent, 6+=Admin"
+          example: 1
+        status:
+          type: string
+          enum: [Active, Banned, Unconfirmed]
+          example: "Active"
+        balance:
+          type: number
+          format: float
+          example: 150.00
+        shop_id:
+          type: integer
+          example: 3
+        parent_id:
+          type: integer
+          example: 7
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-01T00:00:00.000000Z"
+
+    UserCreateRequest:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          example: "newplayer"
+        password:
+          type: string
+          format: password
+          example: "pass123"
+        balance:
+          type: number
+          format: float
+          description: Initial balance (players only)
+          example: 50.00
+
+    UserUpdateRequest:
+      type: object
+      required:
+        - username
+      properties:
+        username:
+          type: string
+          example: "player123"
+        email:
+          type: string
+          format: email
+          example: "player@example.com"
+        password:
+          type: string
+          format: password
+          example: "newpass"
+        password_confirmation:
+          type: string
+          format: password
+          example: "newpass"
+        status:
+          type: string
+          enum: [Active, Banned, Unconfirmed]
+          example: "Active"
+
+    SignupRequest:
+      type: object
+      required:
+        - name
+        - username
+        - password
+        - password_confirmation
+        - phone
+        - email
+      properties:
+        name:
+          type: string
+          minLength: 4
+          example: "John Doe"
+        username:
+          type: string
+          minLength: 6
+          maxLength: 16
+          example: "johndoe1"
+        password:
+          type: string
+          format: password
+          minLength: 6
+          maxLength: 16
+          example: "pass123"
+        password_confirmation:
+          type: string
+          format: password
+          example: "pass123"
+        phone:
+          type: string
+          pattern: '^\d{10}$'
+          example: "5551234567"
+        email:
+          type: string
+          format: email
+          example: "john@example.com"
+
+    ChangePasswordRequest:
+      type: object
+      required:
+        - username
+        - token
+        - old_password
+        - password
+        - password_confirmation
+      properties:
+        username:
+          type: string
+          example: "john_doe"
+        token:
+          type: string
+          example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+        old_password:
+          type: string
+          format: password
+          example: "oldpass123"
+        password:
+          type: string
+          format: password
+          example: "newpass456"
+        password_confirmation:
+          type: string
+          format: password
+          example: "newpass456"
+
+    RewardRequest:
+      type: object
+      required:
+        - username
+        - token
+        - pick
+      properties:
+        username:
+          type: string
+          example: "john_doe"
+        token:
+          type: string
+          example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+        pick:
+          type: integer
+          minimum: 0
+          maximum: 4
+          description: Reward slot index to pick (0-4). If > 4, server picks randomly.
+          example: 2
+
+    RewardResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "success"
+        pick_items:
+          type: array
+          items:
+            type: integer
+          description: Array of 5 possible win amounts
+          example: [50, 30, 10, 20, 30]
+        picked_index:
+          type: integer
+          example: 2
+        win_amount:
+          type: integer
+          example: 10
+
+    MassUsersRequest:
+      type: object
+      required:
+        - count
+        - balance
+      properties:
+        count:
+          type: integer
+          maximum: 100
+          example: 10
+        balance:
+          type: number
+          format: float
+          example: 50.00
+
+    # ─── Game ─────────────────────────────────────────────────────────────────
+
+    Game:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        name:
+          type: string
+          example: "SlotGame1"
+        title:
+          type: string
+          example: "Slot Game One"
+        device:
+          type: string
+          example: "mobile"
+        view:
+          type: integer
+          example: 1
+        label:
+          type: string
+          example: "hot"
+        orientation:
+          type: string
+          example: "landscape"
+        shop_id:
+          type: integer
+          example: 3
+
+    GameListRequest:
+      type: object
+      required:
+        - username
+        - token
+      properties:
+        username:
+          type: string
+          example: "john_doe"
+        token:
+          type: string
+          example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+
+    GameListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        src:
+          type: string
+          example: "/frontend/Default/ico/SlotGame1.png"
+        size:
+          type: string
+          enum: [small, big]
+          example: "small"
+        tag:
+          type: string
+          enum: [hot, new]
+          example: "hot"
+        url:
+          type: string
+          example: "/game/open/SlotGame1?api_exit=/"
+        orientation:
+          type: string
+          example: "landscape"
+
+    GameListResponse:
+      type: object
+      properties:
+        slots:
+          type: array
+          items:
+            $ref: '#/components/schemas/GameListItem'
+        fishes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GameListItem'
+        firelinks:
+          type: array
+          items:
+            $ref: '#/components/schemas/GameListItem'
+
+    # ─── Jackpot ─────────────────────────────────────────────────────────────
+
+    JackpotTier:
+      type: object
+      properties:
+        name:
+          type: string
+          enum: [bronze, silver, gold, platinum]
+          example: "gold"
+        jackpot:
+          type: number
+          format: float
+          example: 12000.00
+
+    JackpotWin:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Gold Jackpot"
+        win:
+          type: number
+          format: float
+          example: 12000.00
+        date:
+          type: string
+          example: "2025-03-15 14:32:00"
+
+    CashbackWin:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "cashback"
+        win:
+          type: number
+          format: float
+          example: 25.00
+        date:
+          type: string
+          format: date-time
+          example: "2025-03-15T14:00:00.000000Z"
+
+    JackpotStatusRequest:
+      type: object
+      required:
+        - username
+        - token
+      properties:
+        username:
+          type: string
+          example: "john_doe"
+        token:
+          type: string
+          example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+
+    JackpotStatusResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "success"
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/JackpotTier'
+        i:
+          type: integer
+          example: 1
+        jackpots:
+          type: array
+          items:
+            $ref: '#/components/schemas/JackpotWin'
+        cashback:
+          type: array
+          items:
+            $ref: '#/components/schemas/CashbackWin'
+        reward_available:
+          type: boolean
+          example: true
+        user_balance:
+          type: number
+          format: float
+          example: 350.00
+
+    Jackpot:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Gold Jackpot"
+        balance:
+          type: number
+          format: float
+          example: 12000.00
+        shop_id:
+          type: integer
+          example: 3
+        date_time:
+          type: string
+          format: date-time
+          example: "2025-03-15T12:00:00.000000Z"
+
+    # ─── Shop ─────────────────────────────────────────────────────────────────
+
+    Shop:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 3
+        name:
+          type: string
+          example: "Main Shop"
+        currency:
+          type: string
+          example: "USD"
+        percent:
+          type: integer
+          example: 90
+        balance:
+          type: number
+          format: float
+          example: 5000.00
+        is_blocked:
+          type: integer
+          enum: [0, 1]
+          example: 0
+        frontend:
+          type: string
+          example: "Default"
+        orderby:
+          type: integer
+          example: 1
+        max_win:
+          type: number
+          format: float
+          example: 10000.00
+        user_id:
+          type: integer
+          example: 5
+        access:
+          type: integer
+          example: 1
+
+    ShopCreateRequest:
+      type: object
+      required:
+        - name
+        - currency
+        - percent
+        - orderby
+        - country
+        - os
+        - device
+        - access
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          example: "New Shop"
+        currency:
+          type: string
+          example: "USD"
+        percent:
+          type: integer
+          example: 90
+        orderby:
+          type: integer
+          example: 1
+        country:
+          type: array
+          items:
+            type: string
+          example: ["US", "CA"]
+        os:
+          type: array
+          items:
+            type: string
+          example: ["android", "ios", "windows"]
+        device:
+          type: array
+          items:
+            type: string
+          example: ["mobile", "desktop"]
+        access:
+          type: integer
+          example: 1
+        frontend:
+          type: string
+          example: "Default"
+        is_blocked:
+          type: integer
+          enum: [0, 1]
+          example: 0
+        pending:
+          type: integer
+          example: 0
+        max_win:
+          type: number
+          format: float
+          example: 10000.00
+        categories:
+          type: array
+          items:
+            type: integer
+          example: [1, 2]
+
+    ShopAdminCreateRequest:
+      type: object
+      required:
+        - name
+        - currency
+        - percent
+        - orderby
+        - agent
+        - distributor
+        - manager
+        - cashier
+        - users
+      properties:
+        name:
+          type: string
+          example: "New Shop"
+        currency:
+          type: string
+          example: "USD"
+        percent:
+          type: integer
+          example: 90
+        orderby:
+          type: integer
+          example: 1
+        frontend:
+          type: string
+          example: "Default"
+        max_win:
+          type: number
+          format: float
+          example: 10000.00
+        balance:
+          type: number
+          format: float
+          example: 5000.00
+        categories:
+          type: array
+          items:
+            type: integer
+        country:
+          type: array
+          items:
+            type: string
+        os:
+          type: array
+          items:
+            type: string
+        device:
+          type: array
+          items:
+            type: string
+        access:
+          type: integer
+        agent:
+          type: object
+          required: [username, password]
+          properties:
+            username:
+              type: string
+              example: "agent_user"
+            password:
+              type: string
+              format: password
+              example: "pass123"
+            balance:
+              type: number
+              format: float
+              example: 10000.00
+        distributor:
+          type: object
+          required: [username, password]
+          properties:
+            username:
+              type: string
+              example: "distributor_user"
+            password:
+              type: string
+              format: password
+              example: "pass123"
+            balance:
+              type: number
+              format: float
+              example: 5000.00
+        manager:
+          type: object
+          required: [username, password]
+          properties:
+            username:
+              type: string
+              example: "manager_user"
+            password:
+              type: string
+              format: password
+              example: "pass123"
+        cashier:
+          type: object
+          required: [username, password]
+          properties:
+            username:
+              type: string
+              example: "cashier_user"
+            password:
+              type: string
+              format: password
+              example: "pass123"
+        users:
+          type: object
+          required: [count, balance]
+          properties:
+            count:
+              type: integer
+              example: 5
+            balance:
+              type: number
+              format: float
+              example: 100.00
+
+    ShopBalanceRequest:
+      type: object
+      required:
+        - summ
+      properties:
+        summ:
+          type: number
+          format: float
+          example: 500.00
+
+    # ─── Transactions / Statistics ────────────────────────────────────────────
+
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 501
+        title:
+          type: string
+          nullable: true
+          example: null
+        user_id:
+          type: integer
+          example: 42
+        payeer_id:
+          type: integer
+          nullable: true
+          example: 7
+        system:
+          type: string
+          example: "cash"
+        type:
+          type: string
+          enum: [add, out]
+          example: "add"
+        sum:
+          type: number
+          format: float
+          example: 100.00
+        sum2:
+          type: number
+          format: float
+          nullable: true
+          example: null
+        shop_id:
+          type: integer
+          example: 3
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-03-15T14:32:00.000000Z"
+
+    GameStat:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1001
+        user_id:
+          type: integer
+          example: 42
+        shop_id:
+          type: integer
+          example: 3
+        game:
+          type: string
+          example: "FishGame1"
+        bet:
+          type: number
+          format: float
+          example: 5.00
+        win:
+          type: number
+          format: float
+          example: 0.00
+        balance:
+          type: number
+          format: float
+          example: 145.00
+        date_time:
+          type: string
+          format: date-time
+          example: "2025-03-15T14:30:00.000000Z"
+
+    OpenShift:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 12
+        shop_id:
+          type: integer
+          example: 3
+        user_id:
+          type: integer
+          example: 7
+        start_date:
+          type: string
+          format: date-time
+          example: "2025-03-15T08:00:00.000000Z"
+        end_date:
+          type: string
+          format: date-time
+          nullable: true
+          example: null
+        balance:
+          type: number
+          format: float
+          example: 5000.00
+        balance_in:
+          type: number
+          format: float
+          example: 2000.00
+        balance_out:
+          type: number
+          format: float
+          example: 500.00
+
+    # ─── Happy Hour ───────────────────────────────────────────────────────────
+
+    HappyHour:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        shop_id:
+          type: integer
+          example: 3
+        start_time:
+          type: string
+          example: "18:00:00"
+        end_time:
+          type: string
+          example: "20:00:00"
+        multiplier:
+          type: integer
+          example: 2
+
+    # ─── Pincode ──────────────────────────────────────────────────────────────
+
+    Pincode:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        code:
+          type: string
+          example: "ABCD-1234-EFGH-5678-IJKL"
+        nominal:
+          type: number
+          format: float
+          example: 50.00
+        status:
+          type: string
+          example: "active"
+        shop_id:
+          type: integer
+          example: 3
+
+    PincodeCreateRequest:
+      type: object
+      required:
+        - code
+        - nominal
+      properties:
+        code:
+          type: string
+          description: Exactly 20 alphanumeric characters (hyphens stripped before validation)
+          example: "abcd1234efgh5678ijkl"
+        nominal:
+          type: number
+          format: float
+          example: 50.00
+        status:
+          type: string
+          example: "active"
+
+    PincodeMassRequest:
+      type: object
+      required:
+        - count
+        - nominal
+      properties:
+        count:
+          type: integer
+          example: 10
+        nominal:
+          type: number
+          format: float
+          example: 50.00
+        status:
+          type: string
+          example: "active"
+
+    PincodeUpdateRequest:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          example: "used"
+
+    # ─── ATM / V2 ─────────────────────────────────────────────────────────────
+
+    AtmRequest:
+      type: object
+      required:
+        - controller
+        - action
+      properties:
+        controller:
+          type: string
+          example: "atm"
+          description: Controller prefix (e.g. 'atm', 'player')
+        action:
+          type: string
+          example: "ping"
+          description: Action name (e.g. 'ping', 'readterminals', 'readcredits')
+
+    AtmPingResponse:
+      type: object
+      properties:
+        success:
+          type: string
+          example: "true"
+        data:
+          type: object
+          properties:
+            atm_id:
+              type: string
+              example: "ide2WtBxo8sC7M6yF$#@ImBx"
+            atm_name:
+              type: string
+              example: ""
+            atm_parent_id:
+              type: string
+              example: "5538"
+            atm_in:
+              type: string
+              example: "0"
+            atm_out:
+              type: string
+              example: "0"
+            atm_rec:
+              type: string
+              example: "0"
+            atm_rec5:
+              type: string
+              example: "0"
+            atm_rec10:
+              type: string
+              example: "0"
+            atm_rec20:
+              type: string
+              example: "0"
+            atm_rec50:
+              type: string
+              example: "0"
+            atm_rec100:
+              type: string
+              example: "0"
+            atm_rec200:
+              type: string
+              example: "0"
+            atm_rec500:
+              type: string
+              example: "0"
+            atm_enabled:
+              type: string
+              example: "1"
+            atm_emptyrecycle:
+              type: string
+              example: "0"
+            atm_forceupdate:
+              type: string
+              example: "0"
+
+    # ─── Credits V2/V3 ────────────────────────────────────────────────────────
+
+    CreditOperationRequest:
+      type: object
+      required:
+        - userhash
+        - amount
+      properties:
+        userhash:
+          type: string
+          description: User's auth_token
+          example: "abc123tokenvalue"
+        amount:
+          type: number
+          format: float
+          example: 100.00
+
+    CreditOperationResponse:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        msg:
+          type: string
+          example: "credit has been deposited successfully!"
+
+    PayoutTicketV2Response:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        msg:
+          type: string
+          example: "Payout ticket has been generated successfully!"
+        payload:
+          type: object
+          properties:
+            user_id:
+              type: integer
+              example: 42
+            ticket_amount:
+              type: number
+              format: float
+              example: 100.00
+            ticket_pin:
+              type: string
+              example: "1234567890123"
+            ticket_status:
+              type: integer
+              example: 1
+
+    # ─── Player Endpoints ─────────────────────────────────────────────────────
+
+    PlayerLoginRequest:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          example: "john_doe"
+        password:
+          type: string
+          format: password
+          example: "secret123"
+
+    PlayerCheckOnlineRequest:
+      type: object
+      required:
+        - userid
+      properties:
+        userid:
+          type: integer
+          example: 42
+
+    PlayerCheckOnlineResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        errormsg:
+          type: string
+          example: ""
+        data:
+          type: object
+          properties:
+            is_online:
+              type: boolean
+              example: true
+            player_score:
+              type: number
+              format: float
+              example: 150.00
+            idleseconds:
+              type: number
+              format: float
+              example: 45.0
+
+    PlayerScoreResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        errormsg:
+          type: string
+          example: ""
+        data:
+          type: object
+          properties:
+            player_score:
+              type: number
+              format: float
+              example: 150.00
+
+    PlayerDepositRequest:
+      type: object
+      required:
+        - userhash
+        - amount
+        - ts_id
+      properties:
+        userhash:
+          type: string
+          example: "abc123tokenvalue"
+        amount:
+          type: number
+          format: float
+          example: 100.00
+        ts_id:
+          type: integer
+          example: 55
+
+    PlayerPayoutTicketRequest:
+      type: object
+      required:
+        - userhash
+        - amount
+      properties:
+        userhash:
+          type: string
+          description: Cashier's auth_token
+          example: "abc123tokenvalue"
+        amount:
+          type: number
+          format: float
+          example: 100.00
+
+    PlayerPayoutTicketResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        errormsg:
+          type: string
+          example: ""
+        data:
+          type: object
+          properties:
+            ticket_id:
+              type: integer
+              example: 55
+            ticket_pin:
+              type: string
+              example: "TEST_TICKET"
+            ticket_amount:
+              type: number
+              format: float
+              example: 100.00
+            ticket_date:
+              type: string
+              example: "2025/03/15"
+
+    ShopBalanceResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        errormsg:
+          type: string
+          example: ""
+        balance:
+          type: number
+          format: float
+          example: 4250.00
+
+# =============================================================================
+# PATHS
+# =============================================================================
+
+paths:
+
+  # ─── Authentication ──────────────────────────────────────────────────────
+
+  /api/login:
+    post:
+      tags:
+        - Authentication
+      summary: Login and obtain JWT token
+      description: >
+        Authenticates a user and returns a JWT access token.
+        Protected by IP allowlist middleware. Accepts username or email.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          description: Invalid credentials, blocked, banned, or unconfirmed account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                invalid_credentials:
+                  value: { "error": "Invalid credentials." }
+                blocked:
+                  value: { "error": "Your account is blocked" }
+                banned:
+                  value: { "error": "Your account is banned by administrators." }
+        '500':
+          description: Could not create JWT token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/logout:
+    post:
+      tags:
+        - Authentication
+      summary: Logout user
+      description: Clears the user's stored API token to invalidate their session.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogoutRequest'
+      responses:
+        '200':
+          description: Successfully logged out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '403':
+          description: Token mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "invalid authorization"
+
+  # ─── User Management ────────────────────────────────────────────────────
+
+  /api/signup:
+    post:
+      tags:
+        - User Management
+      summary: Register new player account
+      description: >
+        Creates a new player account in the demo shop.
+        No authentication required. New players receive 5 credits starting balance.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignupRequest'
+      responses:
+        '200':
+          description: Success or failure (check status field)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success, failure]
+                  error:
+                    type: string
+              examples:
+                success:
+                  value: { "status": "success" }
+                failure_validation:
+                  value: { "status": "failure", "error": "The username has already been taken." }
+                failure_no_demo_shop:
+                  value: { "status": "failure", "error": "no demo shop" }
+
+  /api/changePassword:
+    post:
+      tags:
+        - User Management
+      summary: Change user password
+      description: Changes the user's password. Authentication via body token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+      responses:
+        '200':
+          description: Password changed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '403':
+          description: Invalid token or password mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Current password incorrect
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "The current password is incorrect."
+
+  /api/reward:
+    post:
+      tags:
+        - User Management
+      summary: Claim reward bonus
+      description: >
+        Claims a reward bonus for the user. Picks one of 5 random win slots.
+        The win amount is a percentage of the user's reward_base balance.
+        After claiming, reward_base is reset to 0.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RewardRequest'
+      responses:
+        '200':
+          description: Reward claimed or error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RewardResponse'
+        '403':
+          description: Invalid token or no reward available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/users:
+    get:
+      tags:
+        - User Management
+      summary: List users
+      description: Returns paginated list of users visible to the authenticated user based on role hierarchy.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+          description: Filter by username (partial match)
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [Active, Banned, Unconfirmed]
+          description: Filter by user status
+        - name: role
+          in: query
+          schema:
+            type: integer
+          description: Filter by role ID
+      responses:
+        '200':
+          description: Paginated user list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          description: Unauthenticated
+
+    post:
+      tags:
+        - User Management
+      summary: Create a new user
+      description: >
+        Creates a new user one role level below the authenticated user.
+        An open shift is required when assigning balance to new players.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateRequest'
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+        '403':
+          description: Permission denied or insufficient funds
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/users/mass:
+    post:
+      tags:
+        - User Management
+      summary: Bulk create player accounts
+      description: Creates multiple player accounts at once. Only available to cashiers. Max 100 per request.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MassUsersRequest'
+      responses:
+        '200':
+          description: Mass users created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '403':
+          description: Permission denied or insufficient funds
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/users/{user}:
+    get:
+      tags:
+        - User Management
+      summary: Get user by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: User ID
+      responses:
+        '200':
+          description: User object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+        '403':
+          description: No permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      tags:
+        - User Management
+      summary: Update user
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: User ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdateRequest'
+      responses:
+        '200':
+          description: Updated user object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+        '403':
+          description: No permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation error
+
+    delete:
+      tags:
+        - User Management
+      summary: Delete user
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: User ID
+      responses:
+        '200':
+          description: User deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '403':
+          description: Cannot delete — balance > 0 or has sub-users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/users/{user}/balance/{type}:
+    put:
+      tags:
+        - Balance & Credits
+      summary: Add or withdraw user balance
+      description: >
+        Transfers credits to or from a user's balance.
+        Allowed role pairings: Admin→Agent, Agent→Distributor, Cashier→User.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Target user ID
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [add, out]
+          description: "'add' to deposit credits, 'out' to withdraw"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - summ
+              properties:
+                summ:
+                  type: number
+                  format: float
+                  example: 50.00
+                all:
+                  type: string
+                  enum: ["1"]
+                  description: Set to '1' to withdraw entire balance
+      responses:
+        '200':
+          description: Balance updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: Wrong role or insufficient balance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ─── Games ───────────────────────────────────────────────────────────────
+
+  /api/gamelist:
+    post:
+      tags:
+        - Games
+      summary: Get categorized game list
+      description: >
+        Returns games categorized into slots, fish games, and firelinks
+        for the user's shop. Uses body-level token authentication.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GameListRequest'
+      responses:
+        '200':
+          description: Categorized game list or error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameListResponse'
+              examples:
+                success:
+                  value:
+                    slots:
+                      - id: 10
+                        src: "/frontend/Default/ico/SlotGame1.png"
+                        size: "small"
+                        tag: "hot"
+                        url: "/game/open/SlotGame1?api_exit=/"
+                        orientation: "landscape"
+                    fishes: []
+                    firelinks: []
+                error:
+                  value:
+                    status: "failure"
+                    error: "invalid authroization"
+
+  /api/games:
+    get:
+      tags:
+        - Games
+      summary: List games (paginated)
+      description: Returns paginated list of games for the authenticated player's shop. Requires player role.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: integer
+          description: Filter by game ID
+        - name: name
+          in: query
+          schema:
+            type: string
+          description: Filter by game name(s), pipe-separated (e.g. GameA|GameB)
+        - name: search
+          in: query
+          schema:
+            type: string
+          description: Partial match on game title
+        - name: device
+          in: query
+          schema:
+            type: string
+          description: Filter by device type(s), pipe-separated
+        - name: view
+          in: query
+          schema:
+            type: integer
+          description: Filter by view flag
+        - name: labels
+          in: query
+          schema:
+            type: string
+          description: Filter by label(s), pipe-separated
+        - name: category
+          in: query
+          schema:
+            type: string
+          description: Filter by category ID(s), pipe-separated
+        - name: subcat
+          in: query
+          schema:
+            type: string
+            enum: [new, hot]
+          description: Filter by subcategory label
+      responses:
+        '200':
+          description: Paginated game list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Game'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '400':
+          description: No permission (non-player role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ─── Jackpots ────────────────────────────────────────────────────────────
+
+  /api/info:
+    post:
+      tags:
+        - Jackpots
+      summary: Get jackpot status, wins, cashback, and user balance
+      description: >
+        Returns jackpot pool balances, recent wins for the user,
+        cashback bonuses, reward availability, and current balance.
+        Also refreshes the user's online heartbeat in Redis.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JackpotStatusRequest'
+      responses:
+        '200':
+          description: Jackpot status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JackpotStatusResponse'
+
+  /api/jackpots:
+    get:
+      tags:
+        - Jackpots
+      summary: List jackpots
+      description: Returns paginated list of jackpot records for the user's shop.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+          description: Filter by jackpot ID(s), pipe-separated
+        - name: search
+          in: query
+          schema:
+            type: string
+          description: Partial match on jackpot name
+      responses:
+        '200':
+          description: Paginated jackpot list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Jackpot'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+
+  # ─── Shops ───────────────────────────────────────────────────────────────
+
+  /api/shops:
+    get:
+      tags:
+        - Shops
+      summary: List shops
+      description: Returns paginated list of shops accessible to the authenticated user. Forbidden for cashiers.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: name
+          in: query
+          schema:
+            type: string
+        - name: credit_from
+          in: query
+          schema:
+            type: number
+        - name: credit_to
+          in: query
+          schema:
+            type: number
+        - name: frontend
+          in: query
+          schema:
+            type: string
+        - name: percent_from
+          in: query
+          schema:
+            type: number
+        - name: percent_to
+          in: query
+          schema:
+            type: number
+        - name: order
+          in: query
+          schema:
+            type: integer
+        - name: currency
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+        - name: users
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Paginated shop list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Shop'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+
+    post:
+      tags:
+        - Shops
+      summary: Create a new shop
+      description: Creates a new shop. Only available to distributors.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShopCreateRequest'
+      responses:
+        '201':
+          description: Shop created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Shop'
+        '400':
+          description: Not a distributor or max shops reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/shops/admin:
+    post:
+      tags:
+        - Shops
+      summary: Admin — create full shop hierarchy
+      description: >
+        Creates a complete shop with all user roles (agent, distributor, manager, cashier)
+        and N player accounts in one operation. Admin only.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShopAdminCreateRequest'
+      responses:
+        '200':
+          description: Full shop hierarchy created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Shop'
+        '400':
+          description: Validation error or balance hierarchy violation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/shops/currency:
+    get:
+      tags:
+        - Shops
+      summary: Get current shop currency
+      description: Returns the currency configured for the authenticated user's shop.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Currency code
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  currency:
+                    type: string
+                    example: "USD"
+        '404':
+          description: No shop found
+
+  /api/shops/block:
+    post:
+      tags:
+        - Shops
+      summary: Block current shop
+      description: Blocks the authenticated user's shop and invalidates all active player sessions.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Shop blocked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/shops/unblock:
+    post:
+      tags:
+        - Shops
+      summary: Unblock current shop
+      description: Unblocks the authenticated user's shop.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Shop unblocked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/shops/{shop_id}:
+    get:
+      tags:
+        - Shops
+      summary: Get shop by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Shop object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Shop'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/shops/{shop}:
+    put:
+      tags:
+        - Shops
+      summary: Update shop
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: shop
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShopCreateRequest'
+      responses:
+        '201':
+          description: Shop updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Shop'
+        '404':
+          description: Not found or no access
+
+    delete:
+      tags:
+        - Shops
+      summary: Delete shop
+      description: Deletes a shop and all associated data. Admin or Agent only.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: shop
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Shop deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: Cannot delete — users/jackpots/games with balance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: No permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/shops/{shop}/balance/{type}:
+    put:
+      tags:
+        - Balance & Credits
+      summary: Transfer balance between distributor and shop
+      description: Moves funds between distributor's personal balance and a shop's balance. Distributor only.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: shop
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Shop ID
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [add, out]
+          description: "'add' = distributor → shop, 'out' = shop → distributor"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShopBalanceRequest'
+      responses:
+        '200':
+          description: Transfer successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: Insufficient balance or wrong role
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ─── Transactions ────────────────────────────────────────────────────────
+
+  /api/transactions:
+    get:
+      tags:
+        - Transactions & Statistics
+      summary: List financial transactions
+      description: Returns paginated financial transaction/statistics records scoped to the user's hierarchy.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: user
+          in: query
+          schema:
+            type: string
+          description: Filter by username
+        - name: system
+          in: query
+          schema:
+            type: string
+          description: Filter by system type
+        - name: role
+          in: query
+          schema:
+            type: integer
+          description: Filter by role ID
+        - name: credit_in_from
+          in: query
+          schema:
+            type: number
+        - name: credit_in_to
+          in: query
+          schema:
+            type: number
+        - name: credit_out_from
+          in: query
+          schema:
+            type: number
+        - name: credit_out_to
+          in: query
+          schema:
+            type: number
+        - name: money_in_from
+          in: query
+          schema:
+            type: number
+        - name: money_in_to
+          in: query
+          schema:
+            type: number
+        - name: money_out_from
+          in: query
+          schema:
+            type: number
+        - name: money_out_to
+          in: query
+          schema:
+            type: number
+        - name: dates
+          in: query
+          schema:
+            type: string
+          description: "Date range: 'YYYY-MM-DD HH:MM:SS - YYYY-MM-DD HH:MM:SS'"
+        - name: shifts
+          in: query
+          schema:
+            type: integer
+          description: Filter by open shift ID
+      responses:
+        '200':
+          description: Paginated transactions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Transaction'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+
+  /api/gamestats/pay:
+    get:
+      tags:
+        - Transactions & Statistics
+      summary: List payment statistics
+      description: Returns paginated payment statistics. Same filtering options as /api/transactions.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: user
+          in: query
+          schema:
+            type: string
+        - name: system
+          in: query
+          schema:
+            type: string
+        - name: role
+          in: query
+          schema:
+            type: integer
+        - name: dates
+          in: query
+          schema:
+            type: string
+        - name: shifts
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Paginated payment statistics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Transaction'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+
+  /api/gamestats/game:
+    get:
+      tags:
+        - Transactions & Statistics
+      summary: List game round statistics
+      description: Returns paginated in-game round statistics.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: game
+          in: query
+          schema:
+            type: string
+          description: Partial match on game name
+        - name: balance_from
+          in: query
+          schema:
+            type: number
+        - name: balance_to
+          in: query
+          schema:
+            type: number
+        - name: bet_from
+          in: query
+          schema:
+            type: number
+        - name: bet_to
+          in: query
+          schema:
+            type: number
+        - name: win_from
+          in: query
+          schema:
+            type: number
+        - name: win_to
+          in: query
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Paginated game statistics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GameStat'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+
+  /api/gamestats/shift:
+    get:
+      tags:
+        - Transactions & Statistics
+      summary: List open shift records
+      description: Returns paginated shift records. Not available to cashiers or players.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: integer
+          description: Filter by shift ID
+        - name: username
+          in: query
+          schema:
+            type: string
+          description: Filter by cashier username (partial match)
+      responses:
+        '200':
+          description: Paginated shift records
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/OpenShift'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '400':
+          description: No permission (cashier or user role)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ─── Happy Hour ──────────────────────────────────────────────────────────
+
+  /api/happyhour:
+    get:
+      tags:
+        - Happy Hour
+      summary: List happy hour promotions
+      description: Returns happy hour promotions for the user's shop.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Paginated happy hour list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/HappyHour'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '400':
+          description: No shop assigned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ─── Open Shift ──────────────────────────────────────────────────────────
+
+  /api/shift/start:
+    post:
+      tags:
+        - Open Shift
+      summary: Start a new shift
+      description: >
+        Opens a new shift for the authenticated cashier.
+        Automatically closes any currently open shift first.
+        Requires cashier role with no players holding balance.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Shift started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: Not a cashier, players with balance, or shop not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/shift/info:
+    get:
+      tags:
+        - Open Shift
+      summary: Get current open shift info
+      description: Returns the current open shift details for a given shop.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: shop_id
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: The shop ID to query
+      responses:
+        '200':
+          description: Open shift info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 12
+                  start_date:
+                    type: string
+                    format: date-time
+                    example: "2025-03-15T08:00:00.000000Z"
+        '400':
+          description: No open shift
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Missing or inaccessible shop_id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ─── Pincodes ────────────────────────────────────────────────────────────
+
+  /api/pincodes:
+    get:
+      tags:
+        - Pincodes
+      summary: List pincodes
+      description: Returns pincodes for the user's shop. Requires pincodes.manage permission.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+          description: Partial match on pincode value
+        - name: sum_from
+          in: query
+          schema:
+            type: number
+        - name: sum_to
+          in: query
+          schema:
+            type: number
+        - name: status
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Paginated pincode list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Pincode'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+
+    post:
+      tags:
+        - Pincodes
+      summary: Create a pincode
+      description: Creates a single pincode manually with a user-supplied code.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PincodeCreateRequest'
+      responses:
+        '201':
+          description: Pincode created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Pincode'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/pincodes/mass:
+    post:
+      tags:
+        - Pincodes
+      summary: Bulk generate pincodes
+      description: Auto-generates multiple pincodes with unique codes in XXXX-XXXX-XXXX-XXXX-XXXX format.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PincodeMassRequest'
+      responses:
+        '201':
+          description: Pincodes generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: Invalid count or nominal
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/pincodes/{pincode}:
+    put:
+      tags:
+        - Pincodes
+      summary: Update pincode status
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: pincode
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PincodeUpdateRequest'
+      responses:
+        '201':
+          description: Pincode updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      tags:
+        - Pincodes
+      summary: Delete pincode
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: pincode
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Pincode deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ─── ATM / V2 ────────────────────────────────────────────────────────────
+
+  /api/v2/atm:
+    post:
+      tags:
+        - ATM Terminal (V2)
+      summary: ATM dispatcher
+      description: >
+        Routes to ATM sub-actions based on 'controller' and 'action' fields.
+        Available actions: atmPing, atmReadterminals, playerReadcredits.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AtmRequest'
+            examples:
+              ping:
+                summary: Ping the ATM
+                value:
+                  controller: "atm"
+                  action: "ping"
+              readterminals:
+                summary: Read connected terminals
+                value:
+                  controller: "atm"
+                  action: "readterminals"
+              readcredits:
+                summary: Read player credits
+                value:
+                  controller: "player"
+                  action: "readcredits"
+      responses:
+        '200':
+          description: ATM action result
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/AtmPingResponse'
+                  - type: object
+                    description: Terminals or credits response
+
+  # ─── Credits V2 ──────────────────────────────────────────────────────────
+
+  /api/v2/credits/deposit:
+    post:
+      tags:
+        - Credits (V2)
+      summary: Deposit credits to user
+      description: Adds credits to a user's balance. Identified by auth_token (userhash).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditOperationRequest'
+      responses:
+        '200':
+          description: Deposit result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditOperationResponse'
+
+  /api/v2/credits/withdraw:
+    post:
+      tags:
+        - Credits (V2)
+      summary: Withdraw credits from user
+      description: Subtracts credits from a user's balance. Identified by auth_token (userhash).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditOperationRequest'
+      responses:
+        '200':
+          description: Withdrawal result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditOperationResponse'
+
+  /api/v2/credits/withdrawcashout:
+    post:
+      tags:
+        - Credits (V2)
+      summary: Full cash-out (withdraw all balance)
+      description: Resets user balance to 0 and records the full amount as total_out.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditOperationRequest'
+      responses:
+        '200':
+          description: Cash-out result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditOperationResponse'
+
+  /api/v2/credits/payoutticket:
+    post:
+      tags:
+        - Credits (V2)
+      summary: Generate payout ticket
+      description: Creates a payout ticket record for a user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditOperationRequest'
+      responses:
+        '200':
+          description: Ticket created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayoutTicketV2Response'
+
+  # ─── Credits V3 ──────────────────────────────────────────────────────────
+
+  /api/v3/credits/deposit:
+    post:
+      tags:
+        - Credits (V3)
+      summary: Deposit credits (V3)
+      description: Identical to V2 endpoint. Adds credits to a user's balance.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditOperationRequest'
+      responses:
+        '200':
+          description: Deposit result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditOperationResponse'
+
+  /api/v3/credits/withdraw:
+    post:
+      tags:
+        - Credits (V3)
+      summary: Withdraw credits (V3)
+      description: Identical to V2 endpoint. Subtracts credits from a user's balance.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditOperationRequest'
+      responses:
+        '200':
+          description: Withdrawal result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditOperationResponse'
+
+  /api/v3/credits/withdrawcashout:
+    post:
+      tags:
+        - Credits (V3)
+      summary: Full cash-out (V3)
+      description: Identical to V2 endpoint. Resets user balance to 0.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditOperationRequest'
+      responses:
+        '200':
+          description: Cash-out result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditOperationResponse'
+
+  /api/v3/credits/payoutticket:
+    post:
+      tags:
+        - Credits (V3)
+      summary: Generate payout ticket (V3)
+      description: Identical to V2 endpoint. Creates a payout ticket.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditOperationRequest'
+      responses:
+        '200':
+          description: Ticket created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayoutTicketV2Response'
+
+  # ─── Player Endpoints ─────────────────────────────────────────────────────
+
+  /api/player/credits:
+    get:
+      tags:
+        - Player
+      summary: List credit tiers
+      description: Returns all available credit tier options.
+      responses:
+        '200':
+          description: Credit list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  errormsg:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        credit:
+                          type: integer
+
+  /api/player/credits/deposit:
+    post:
+      tags:
+        - Player
+      summary: Deposit credits using a pay ticket
+      description: Validates and applies a pay ticket to deposit credits for a cashier or user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlayerDepositRequest'
+      responses:
+        '200':
+          description: Deposit result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  errormsg:
+                    type: string
+
+  /api/player/credits/pending:
+    post:
+      tags:
+        - Player
+      summary: Check pending pay ticket
+      description: Verifies whether a pay ticket is pending and valid (ticket_status = 0).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlayerDepositRequest'
+      responses:
+        '200':
+          description: Pending check result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  errormsg:
+                    type: string
+
+  /api/player/checklogin:
+    post:
+      tags:
+        - Player
+      summary: Player login — returns JWT token and profile
+      description: Validates credentials and returns a JWT token stored as api_token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlayerLoginRequest'
+      responses:
+        '200':
+          description: Login result with user data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+              examples:
+                failure:
+                  value:
+                    success: false
+                    errormsg: "Login Fail, please check username"
+                    data: ""
+
+  /api/player/checkloginsyn:
+    post:
+      tags:
+        - Player
+      summary: Player login — status-only check
+      description: Validates credentials without returning user data or a token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlayerLoginRequest'
+      responses:
+        '200':
+          description: Login status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  errormsg:
+                    type: string
+                  login:
+                    type: boolean
+
+  /api/player/checkonline:
+    post:
+      tags:
+        - Player
+      summary: Check if player is online
+      description: Returns online status based on last_online timestamp (within 5 minutes = online).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlayerCheckOnlineRequest'
+      responses:
+        '200':
+          description: Online status and score
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerCheckOnlineResponse'
+
+  /api/player/userdata:
+    get:
+      tags:
+        - Player
+      summary: Get player balance by username
+      parameters:
+        - name: username
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Player score
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerScoreResponse'
+
+  /api/player/checkscore:
+    post:
+      tags:
+        - Player
+      summary: Get player balance by user ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlayerCheckOnlineRequest'
+      responses:
+        '200':
+          description: Player score
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerScoreResponse'
+
+  /api/player/shopbalance:
+    post:
+      tags:
+        - Player
+      summary: Get total balance of all users under a parent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - parent_id
+              properties:
+                parent_id:
+                  type: integer
+                  example: 7
+      responses:
+        '200':
+          description: Aggregated balance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShopBalanceResponse'
+
+  /api/player/inamounts:
+    post:
+      tags:
+        - Player
+      summary: Get total credit-in amounts under a parent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - parent_id
+              properties:
+                parent_id:
+                  type: integer
+                  example: 7
+      responses:
+        '200':
+          description: Total in amounts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  errormsg:
+                    type: string
+                  player_score:
+                    type: number
+                    format: float
+
+  /api/player/ticket/payout:
+    post:
+      tags:
+        - Player
+      summary: Create payout ticket (cashier only)
+      description: Generates a payout ticket for a cashier user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlayerPayoutTicketRequest'
+      responses:
+        '200':
+          description: Ticket created or error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerPayoutTicketResponse'
+
+  # ─── Game Server Bridge (Web Route) ──────────────────────────────────────
+
+  /game/{game}/server:
+    post:
+      tags:
+        - Game Server Bridge
+      summary: Game server communication bridge
+      description: >
+        Web-layer route (NOT under /api/) that bridges game client messages to the game server.
+        Operates on the www. subdomain. Session-based auth via web middleware.
+        Note: Use base URL http://www.localhost:8000 (no /api/ prefix for this route).
+      parameters:
+        - name: game
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Game identifier / slug
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Game-specific protocol payload (varies by game)
+      responses:
+        '200':
+          description: Game server response (format depends on game protocol)
+          content:
+            application/json:
+              schema:
+                type: object
+
+# =============================================================================
+# TAGS
+# =============================================================================
+
+tags:
+  - name: Authentication
+    description: Login and logout endpoints
+  - name: User Management
+    description: Create, read, update, delete users and player accounts
+  - name: Balance & Credits
+    description: Add and withdraw credits from user and shop accounts
+  - name: Games
+    description: Game listing endpoints
+  - name: Jackpots
+    description: Jackpot status and listing
+  - name: Shops
+    description: Shop management — create, update, delete, block/unblock
+  - name: Transactions & Statistics
+    description: Financial and game statistics reporting
+  - name: Happy Hour
+    description: Happy hour promotion listing
+  - name: Open Shift
+    description: Cashier shift management
+  - name: Pincodes
+    description: Pincode generation, listing, and management
+  - name: ATM Terminal (V2)
+    description: ATM/Terminal dispatcher for hardware integration
+  - name: Credits (V2)
+    description: V2 credit deposit, withdrawal, and ticket endpoints
+  - name: Credits (V3)
+    description: V3 credit endpoints (identical behavior to V2)
+  - name: Player
+    description: Player-facing status, score, and ticket endpoints
+  - name: Game Server Bridge
+    description: WebSocket/server bridge for in-game communication
