@@ -1,0 +1,132 @@
+[
+    {
+        "1": {
+            "minOdds": 2,
+            "maxOdds": 2,
+            "name":"GURNARD"
+        },
+        "2": {
+            "minOdds": 3,
+            "maxOdds": 3,
+            "name":"NEMO"
+        },
+        "3": {
+            "minOdds": 4,
+            "maxOdds": 4,
+            "name":"BUTTERFLY"
+        },
+        "4": {
+            "minOdds": 5,
+            "maxOdds": 5,
+            "name":"PUFFER_FISH"
+        },
+        "5": {
+            "minOdds": 6,
+            "maxOdds": 6,
+            "name":"SNAIL_FISH"
+        },
+        "6": {
+            "minOdds": 7,
+            "maxOdds": 7,
+            "name":"FLAT_FISH"
+        },
+        "7": {
+            "minOdds": 8,
+            "maxOdds": 8,
+            "name":"LOBSTER"
+        },
+        "8": {
+            "minOdds": 9,
+            "maxOdds": 9,
+            "name":"SAIL_FISH"
+        },
+        "9": {
+            "minOdds": 10,
+            "maxOdds": 10,
+            "name":"OCTOPUS"
+        },
+        "10": {
+            "minOdds": 12,
+            "maxOdds": 12,
+            "name":"ANGLER_FISH"
+        },
+        "11": {
+            "minOdds": 15,
+            "maxOdds": 15,
+            "name":"SEA_TURTLE"
+        },
+        "12": {
+            "minOdds": 18,
+            "maxOdds": 18,
+            "name":"SAWTOOTH_SHARK"
+        },
+        "13": {
+            "minOdds": 20,
+            "maxOdds": 20,
+            "name":"MANTARAY"
+        },
+        "14": {
+            "minOdds": 20,
+            "maxOdds": 60,
+            "name":"GIANT_NEMO"
+        },
+        "15": {
+            "minOdds": 20,
+            "maxOdds": 60,
+            "name":"GIANT_BUTTERFLY"
+        },
+        "16": {
+            "minOdds": 20,
+            "maxOdds": 60,
+            "name":"GIANT_PUFFER_FISH"
+        },
+        "17": {
+            "minOdds": 30,
+            "maxOdds": 100,
+            "name":"SHARK"
+        },
+        "18": {
+            "minOdds": 60,
+            "maxOdds": 200,
+            "name":"KILLER_WHALE"
+        },
+        "19": {
+            "minOdds": 350,
+            "maxOdds": 350,
+            "name":"HUMPBACK_WHALE"
+        },
+        "27":{
+            "name":"Super Bomb Crab"
+        },
+        "28":{
+            "name":"Laser Crab"
+        },
+        "29":{
+            "name":"Drill Crab"
+        },
+        "30":{
+            "name":"Roulette Crab"
+        },
+        "31":{
+            "name":"Quake Crab"
+        },
+        "34":{
+            "name":"Mermaid"
+        },
+        "35":{
+            "name":"Phoenix"
+        },
+        "23":{
+            "name":"Emperor Crab"
+        },
+        "25":{
+            "name":"Ancient Crocodile"
+        },
+        "26":{
+            "name":"Thunder Dragon"
+        },
+        "40":{
+            "name":"Buffalo thunder"
+        }
+    }
+]

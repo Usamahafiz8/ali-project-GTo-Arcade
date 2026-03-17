@@ -1,0 +1,25 @@
+{
+  "name": "Marquee",
+  "version": "1.0.0",
+  "homepage": "http://www.56hm.com/",
+  "authors": [
+    "wayou <47558328@qq.com>"
+  ],
+  "description": "label, picture... marquee",
+  "main": "dist/js/jquery.marquee.js",
+  "keywords": [
+    "carousel",
+    "scroll",
+    "animation",
+    "picture"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "jquery": "~1.11.1"
+  }
+}

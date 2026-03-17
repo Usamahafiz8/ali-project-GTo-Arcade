@@ -1,0 +1,285 @@
+.label-with-annotation {
+    margin-top: -7px;
+}
+
+.label-annotation {
+    margin-top: -4px;
+    font-size: 11px;
+    color: #FF0000;
+}
+
+.input-prepend.input-block-level {
+    display: table;
+    width: 100%;
+}
+
+.input-prepend.input-block-level .add-on {
+    display: table-cell;
+    background-color: white;
+}
+
+.input-prepend.input-block-level>input {
+    box-sizing: border-box;
+    height: 30px;
+    display: table-cell;
+    width: 100%;
+    border-left-style: none;
+}
+
+tr.locked,
+tr.locked:hover {
+    font-style: italic;
+}
+
+tr.locked>td:first-child {
+    text-decoration: line-through;
+}
+
+select[multiple="multiple"] {
+    height: auto !important;
+}
+
+.treetable-hover {
+    background-color: #f6f6f6;
+}
+
+.treetable-highlight {
+    background-color: #ffe0e0;
+}
+
+[role=button] {
+    cursor: pointer;
+}
+
+.admin-informer {
+    margin-top: 5px;
+    margin-bottom: 7px;
+    padding: 5px;
+}
+
+.admin-informer>.row-fluid [class*="span"] {
+    min-height: 0 !important;
+}
+
+.copy-to-clipboard-btn {
+    font-size: .875em;
+    margin-right: .125em;
+    position: relative;
+    top: -.25em;
+    left: -.125em;
+    cursor: pointer;
+}
+
+.copy-to-clipboard-btn span {
+    position: absolute;
+    top: .25em;
+    left: .25em
+}
+
+.sidebar a .dropdown {
+    position: absolute;
+    right: 0;
+    margin: 20px;
+    transition: 0.3s ease;
+}
+
+.sidebar .sub-menu {
+    background: rgba(255, 255, 255, 0.1);
+    display: none;
+    flex-direction: row;
+}
+
+.sidebar .sub-menu a {
+    padding-left: 20px;
+}
+
+#dropzone
+{
+    background-color: #f2f2f2;
+    border-style: dotted;
+    border-color: #888;
+    height: 300px
+}
+
+div .close
+{
+    position: absolute;
+    top:5px;
+    right: 5px;
+}
+
+
+/* The grid: Four equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 23%;    
+    padding: 10px;
+  }
+
+  @media only screen and (max-width: 800px) {
+    .column {
+        float: left;
+        width: 100%;    
+        padding: 10px;
+      }
+  }
+  @media only screen and (max-width: 1500px) and (min-width: 800px) {
+    .column {
+        float: left;
+        width: 45%;    
+        padding: 10px;
+      }
+  }
+  
+  /* Style the images inside the grid */
+  .column img {
+    opacity: 0.8;
+    cursor: pointer;    
+  }
+  
+  .column img:hover {
+    opacity: 1;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* The expanding image container (positioning is needed to position the close button and the text) */
+  .gallery_container {
+    position: relative;
+    display: none;
+  }
+  
+  /* Expanding image text */
+  #imgtext {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    color: white;
+    font-size: 20px;
+  }
+  
+  /* Closable button inside the image */
+  .closebtn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: white;
+    background-color: #888;
+    font-size: 35px;
+    cursor: pointer;
+    box-shadow: 2px 2px lightblue;
+  }
+
+  .gg-trash {    
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs,1));
+    width: 10px;
+    height: 12px;
+    border: 2px solid transparent;
+    box-shadow:
+        0 0 0 2px,
+        inset -2px 0 0,
+        inset 2px 0 0;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+    margin-top: 4px
+}
+.gg-trash::after,
+.gg-trash::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute
+}
+.gg-trash::after {
+    background: currentColor;
+    border-radius: 3px;
+    width: 16px;
+    height: 2px;
+    top: -4px;
+    left: -5px;    
+}
+.gg-trash::before {
+    width: 10px;
+    height: 4px;
+    border: 2px solid;
+    border-bottom: transparent;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    top: -7px;
+    left: -2px
+}
+
+.gg-software-download {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs,1));
+    width: 12px;
+    height: 8px;
+    border: 2px solid;
+    border-top: 0;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    margin-top: 8px
+}
+.gg-software-download::after {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-left: 2px solid;
+    border-bottom: 2px solid;
+    transform: rotate(-45deg);
+    left: 0px;
+    bottom: 4px
+}
+.gg-software-download::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    border-radius: 3px;
+    width: 2px;
+    height: 10px;
+    background: currentColor;
+    left: 3px;
+    bottom: 5px
+}
+
+.description-content{
+    width: 100%;
+    display: block;
+}
+
+body {
+    background-image: url('/images/bg.png');
+    color: #1977e4;
+}
+
+a {
+    color: #1977e4;
+}
+
+.brand {
+    color: #1977e4 !important;
+}
+
+.label {
+    background-color: #1977e4 !important;
+}
+
+th {
+    background-color: #1977e4 !important;
+    color: white;
+    border: 1px solid white;    
+}

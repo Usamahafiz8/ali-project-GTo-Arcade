@@ -1,0 +1,105 @@
+.modal-window-user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    position: absolute;
+    z-index: 100000;
+}
+
+.modal-window-user__scale-cont {
+    position: relative;
+    width: 582px;
+    height: 869px;
+}
+
+.modal-window-user__fields {
+    position: absolute;
+    resize: none;
+    border: #FAD123;
+    font-family: 'Patua One', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    width: 300px;
+    height: 30px;
+    left: 137px;
+    font-size: 20px;
+    outline: none;
+    color: #5DEBB0;
+    background: rgba(0,0,0,0);
+    box-shadow: none;
+    z-index: 10;
+}
+
+.modal-window-user__pass1 {
+    top: 513px;
+}
+
+.modal-window-user__pass2 {
+    top: 595px;
+}
+
+.modal-window-user__btn1 {
+    position: absolute;
+    cursor: pointer;
+    width: 46px;
+    height: 49px;
+    top: 236px;
+    left: 364px;
+    z-index: 10;
+}
+.modal-window-user__btn2 {
+    position: absolute;
+    cursor: pointer;
+    width: 197px;
+    height: 58px;
+    top: 669px;
+    left: 91px;
+    z-index: 10;
+}
+.modal-window-user__btn3 {
+    position: absolute;
+    cursor: pointer;
+    width: 197px;
+    height: 58px;
+    top: 670px;
+    left: 293px;
+    z-index: 10;
+}
+.modal-window-user__btn4 {
+    position: absolute;
+    cursor: pointer;
+    width: 46px;
+    height: 49px;
+    top: 115px;
+    left: 74px;
+    z-index: 10;
+}
+
+.modal-window-user__ava {
+    position: absolute;
+    clip-path: circle(39%);
+    width: 212px;
+    height: 212px;
+    z-index: 10;
+    top: 232px;
+    left: 183px;
+}
+
+.modal-window-user__close {
+    position: absolute;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    left: 465px;
+    top: 120px;
+    z-index: 10;
+}
+
+.modal-window-user__back {
+    position: absolute;
+    width: 582px;
+    height: 869px;
+}

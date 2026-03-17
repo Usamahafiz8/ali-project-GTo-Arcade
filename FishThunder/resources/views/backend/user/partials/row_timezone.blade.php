@@ -1,0 +1,1 @@
+<option value="{{$timezone->Id}}" {{ $selectedZone == $timezone->Id ? 'selected' : ''}} >{{$timezone->zone}}</option>

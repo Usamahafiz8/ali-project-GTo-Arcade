@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(unzip -P \"123456@!!Z\" -o FishThunder.zip -d FishThunder_extracted)"
+    ]
+  }
+}

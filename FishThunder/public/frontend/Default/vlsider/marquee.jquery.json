@@ -1,0 +1,37 @@
+{
+    "name": "marquee",
+    "title": "Marquee",
+    "description": "Marquee is a based jquery library of the Licensed Plug-in",
+    "keywords": [
+        "marquee",
+        "scroll",
+        "carousel"
+    ],
+    "version": "1.0.0",
+    "author": {
+        "name": "repar",
+        "email": "47558328@qq.com",
+        "url": "https://github.com/repar"
+    },
+    "maintainers": [
+        {
+            "name": "repar",
+            "email": "47558328@qq.com",
+            "url": "https://github.com/repar"
+        }
+    ],
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/jquery/jquery-color/blob/2.1.2/MIT-LICENSE.txt"
+        }
+    ],
+    "bugs": "http://repar.github.io/jquery.marquee/issues",
+    "homepage": "http://repar.github.io/jquery.marquee/",
+    "docs": "http://repar.github.io/jquery.marquee/",
+    "demo":"http://repar.github.io/jquery.marquee/",
+    "download": "http://repar.github.io/jquery.marquee/zipball/master",
+    "dependencies": {
+        "jquery": "~1.11.1"
+    }
+}

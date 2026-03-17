@@ -1,0 +1,649 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;1,100;1,300&family=Slabo+27px&display=swap");
+
+
+
+/*body{*/
+
+/*    margin-left: 175px;*/
+
+/*    margin-right: 175px;*/
+
+/*}*/
+
+.login-form{
+
+    font-family: "Roboto", sans-serif;
+
+    font-style: normal;
+
+}
+
+.bs-login .login-form .form-group {
+
+    position: relative;
+
+}
+
+
+
+.full-width{
+
+    width:100%;
+
+}
+
+.inputDiv{
+
+    position: absolute;
+
+    width: 100%;
+
+    height: 100%;
+
+    top: 0;
+
+    left: 0;
+
+}
+
+.inputParent{
+
+    position: relative;
+
+}
+
+/*.bs-login .login-form .form-group img {*/
+
+/*    width: 150px;*/
+
+/*    object-fit: cover;*/
+
+/*}*/
+
+
+
+.bs-login .login-form form{
+
+    position: absolute;
+
+    top: 19%;
+
+    width: 53%;
+
+    left: 19%
+
+}
+
+.bs-login .login-form .form-group input.form-control {
+
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+
+    background-color: transparent;
+
+    font-size: 1.3rem;
+
+    line-height: 1.6;
+
+    color: #ffffff;
+
+    border: none;
+
+    border-radius: 0;
+
+    padding: 10px 25px;
+
+    box-shadow: none;
+
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+}
+
+
+
+.bs-login .login-form .form-group input.form-control:focus {
+
+    color:  #ffffff;
+
+    background-color: transparent;
+
+    border-color: #d2d6de;
+
+    outline: 0;
+
+    box-shadow: none;
+
+}
+
+
+
+/* .bs-login .login-form .form-group input.form-control::-webkit-input-placeholder {
+
+    font-weight: 900;
+
+    font-size: 1.3rem;
+
+    color: #ab96a3;
+
+}
+
+
+
+.bs-login .login-form .form-group input.form-control:-moz-placeholder {
+
+    font-weight: 900;
+
+    font-size: 1.3rem;
+
+    color: #ab96a3;
+
+}
+
+
+
+.bs-login .login-form .form-group input.form-control::-moz-placeholder {
+
+    font-weight: 900;
+
+    font-size: 1.3rem;
+
+    color: #ab96a3;
+
+}
+
+
+
+.bs-login .login-form .form-group input.form-control:-ms-input-placeholder {
+
+    font-weight: 900;
+
+    font-size: 1.3rem;
+
+    color: #ab96a3;
+
+}
+
+
+
+.bs-login .login-form .form-group input.form-control::placeholder {
+
+    font-weight: 900;
+
+    font-size: 1.3rem;
+
+    color: #ab96a3;
+
+}
+ */
+
+
+.bs-login .login-form button.btn {
+
+    display: inline-block;
+
+    font-weight: 400;
+
+    text-align: center;
+
+    white-space: nowrap;
+
+    vertical-align: middle;
+
+    -webkit-user-select: none;
+
+    -moz-user-select: none;
+
+    -ms-user-select: none;
+
+    user-select: none;
+
+    border: 1px solid transparent;
+
+    padding: 0.375rem 0.75rem;
+
+    font-size: 1rem;
+
+    line-height: 1.5;
+
+    border-radius: 0.25rem;
+
+    transition: color 0.15s ease-in-out,
+
+    background-color 0.15s ease-in-out,
+
+    border-color 0.15s ease-in-out,
+
+    box-shadow 0.15s ease-in-out;
+
+}
+
+
+
+.bs-login .login-form button.btn.warning-btn {
+
+    width: 100%;
+
+    background-color: transparent;
+
+}
+
+.bs-login .login-form button.btn.warning-btn img{
+
+    width: 100%;
+
+}
+
+
+
+.bs-login .login-form button.btn.warning-btn:focus {
+
+    box-shadow: none;
+
+    outline: 0;
+
+}
+
+
+
+.bs-login .login-form .form-group .invalid-feedback {
+
+    color: #ffffff;
+
+}
+
+.bgImage{
+
+    width: 100%;
+
+}
+
+
+
+.bs-login .login-form .loginCheck {
+
+    display: initial;
+
+    position: relative;
+
+    padding: 0px 0 0 50px;
+
+    margin-bottom: 0;
+
+    cursor: pointer;
+
+    font-size: 2rem;
+
+    -webkit-user-select: none;
+
+    -moz-user-select: none;
+
+    -ms-user-select: none;
+
+    user-select: none;
+
+    color: #ffffff;
+
+}
+
+
+
+.bs-login .login-form .loginCheck input {
+
+    position: absolute;
+
+    opacity: 0;
+
+    cursor: pointer;
+
+}
+
+
+
+.bs-login .login-form .loginCheck .checkmark {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    height: 40px;
+
+    width: 40px;
+
+    background: url(../img/login/check-mark-background.png) no-repeat center;
+
+    background-size: 100% 100%;
+
+}
+
+
+
+.bs-login .login-form .checkmark:after {
+
+    content: "";
+
+    position: absolute;
+
+    display: none;
+
+}
+
+
+
+.bs-login .login-form .loginCheck input:checked ~ .checkmark:after {
+
+    display: block;
+
+}
+
+
+
+.bs-login .login-form .loginCheck .checkmark:after {
+
+    top: -5px;
+
+    left: 0;
+
+    width: 45px;
+
+    height: 45px;
+
+    background: url(../img/login/check-mark.png) no-repeat center;
+
+    background-size: 100% 100%;
+
+}
+
+/*.....................login.css......................*/
+
+
+
+.bs-login {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 100vh;
+
+    background: url(/images/back.jpg) no-repeat center;
+
+    background-size: 100% 100%;
+
+    display: flex;
+
+    align-items: center;
+
+}
+
+
+
+.bs-login .login-img {
+
+    position: relative;
+
+    width: 50%;
+
+    /*height: 100%;*/
+
+    /*float: left;*/
+
+}
+
+
+
+.bs-login .login-img .login-bg-logo {
+
+    padding-left: 150px;
+
+}
+
+
+
+.bs-login .login-content {
+
+    position: relative;
+
+    width: 50%;
+
+    padding-right: 95px;
+
+}
+
+
+
+.bs-login .login-content .login-form {
+
+    padding: 8%;
+
+}
+
+
+
+.bs-login .login-content .login-form .login-logo img {
+
+    width: 100%;
+
+    height: 124px;
+
+    object-fit: fill;
+
+    display: none;
+
+}
+
+.bs-login .login-form .form-group label img{
+
+    max-height: 45px;
+
+}
+
+@media only screen and (max-height: 575.98px) and (orientation: landscape){
+
+    .bs-login .login-content .login-form{
+
+        padding: 7%;
+
+    }
+
+    .bs-login .login-form form{
+
+        top: 15%;
+
+        width: 41%;
+
+        left: 19%;
+
+    }
+
+    .bs-login .login-form .form-group label img{
+
+        max-height: 25px;
+
+    }
+
+    .bs-login .login-form .loginCheck{
+
+        font-size: 1rem;
+
+        padding: 0px 0 0 30px;
+
+    }
+
+    .form-group{
+
+        margin-bottom: 10px;
+
+    }
+
+    .bs-login .login-img .login-bg-logo{
+
+        padding-left: 95px;
+
+    }
+
+    .bs-login .login-form .loginCheck .checkmark{
+
+        height: 25px;
+
+        width: 25px;
+
+    }
+
+    .bs-login .login-form .loginCheck .checkmark:after{
+
+        height: 30px;
+
+        width: 30px;
+
+    }
+
+    .bs-login .login-form .form-group input.form-control {
+        font-size: 1rem;
+        padding-left: 10px;
+    }
+
+}
+
+
+
+@media (min-width: 1980px) {
+
+    .bs-login .login-form .form-group label img{
+
+        max-height: initial;
+
+    }
+
+}
+
+@media (max-width: 820px) and (orientation: portrait) {
+
+    .bs-login{
+
+        background-size: auto 100%;
+
+        flex-direction: column;
+
+    }
+
+    .bs-login .login-img{
+
+        width: 100%;
+
+    }
+
+    .bs-login .login-img .login-bg-logo{
+
+        padding-left: 0px;
+
+    }
+
+    .bs-login .login-content{
+
+        width: 100%;
+
+        padding-right: 0px;
+
+    }
+
+    .bs-login .login-content .login-form {
+
+        padding: 0;
+
+    }
+
+    .bs-login .login-form form{
+
+        top: 10%;
+
+        width: 80%;
+
+        left: 10%;
+
+    }
+
+    .bs-login .login-form .form-group label img{
+
+        max-height: 25px;
+
+    }
+
+    .bs-login .login-form .loginCheck .checkmark{
+
+        height: 25px;
+
+        width: 25px;
+
+    }
+
+    .bs-login .login-form .loginCheck .checkmark:after{
+
+        height: 30px;
+
+        width: 30px;
+
+    }
+
+    .bs-login .login-form .loginCheck{
+
+        font-size: 1rem;
+
+        padding: 0px 0 0 30px;
+
+    }
+
+    .form-group{
+
+        margin-bottom: 10px;
+
+    }
+
+    .bs-login .login-form .form-group input.form-control {
+        font-size: 1rem;
+        padding-left: 10px;
+    }
+
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+
+    .bs-login .login-content {
+
+        padding-right: 60px;
+
+    }
+
+
+
+    .bs-login .login-img .login-bg-logo {
+
+        padding-left: 60px;
+
+    }
+
+
+
+    .bs-login .login-form form {
+
+        top: 10%;
+
+        width: 50%;
+
+        left: 16%;
+
+    }
+
+    .bs-login .login-content .login-form{
+        padding: 0;
+    }
+
+    .bs-login .login-form .form-group input.form-control {
+        font-size: 1rem;
+        padding-left: 10px;
+    }
+}

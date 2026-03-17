@@ -1,0 +1,19 @@
+{
+  "name": "Marquee",
+  "title": "Marquee",
+  "description": "Marquee is a based jquery library of the Licensed Plug-in",
+  "version": "1.0.0",
+  "main": "dist/jquery.marquee.js",
+  "homepage": "http://56hm.com",
+  "author": {
+    "name": "repar",
+    "url": "https://github.com/repar"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-watch": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-uglify": "*",
+    "matchdep": "*"
+  }
+}

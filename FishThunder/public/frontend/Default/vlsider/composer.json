@@ -1,0 +1,13 @@
+{
+    "name": "reparsoft/marquee",
+    "description": "Marquee is a based jquery library of the Licensed Plug-in",
+    "type": "library",
+    "keywords": ["marquee","jquery", "plug-in", "scroll"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "repar",
+            "email": "47558328@qq.com"
+        }
+    ]
+}

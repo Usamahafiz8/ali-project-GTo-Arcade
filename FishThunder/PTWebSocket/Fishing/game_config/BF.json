@@ -1,0 +1,561 @@
+{
+  "1": {
+    "fish_type": "GURNARD",
+    "range":[
+      {"min": 1,"max": 1,"percent": 10}, 
+      {"min": 2,"max": 2,"percent": 25}, 
+      {"min": 3,"max": 3,"percent": 35}, 
+      {"min": 4,"max": 4,"percent": 15}, 
+      {"min": 5,"max": 5,"percent": 15} 
+    ]
+  },
+  "2": {
+    "fish_type": "NEMO",
+    "range":[
+      {"min": 1,"max": 1,"percent": 6},
+      {"min": 2,"max": 2,"percent": 10}, 
+      {"min": 3,"max": 3,"percent": 27}, 
+      {"min": 4,"max": 4,"percent": 30}, 
+      {"min": 5,"max": 5,"percent": 15},
+      {"min": 6,"max": 6,"percent": 12}
+    ]
+  },
+  "3": {
+    "fish_type": "BUTTERFLY",
+    "range":[
+      {"min": 1,"max": 1,"percent": 5},
+      {"min": 2,"max": 2,"percent": 10}, 
+      {"min": 3,"max": 3,"percent": 20}, 
+      {"min": 4,"max": 4,"percent": 30}, 
+      {"min": 5,"max": 5,"percent": 23},
+      {"min": 6,"max": 6,"percent": 5},
+      {"min": 7,"max": 7,"percent": 3},
+      {"min": 8,"max": 8,"percent": 4}
+    ]
+  },
+  "4": {
+    "fish_type": "PUFFER_FISH",
+    "range":[
+      {"min": 1,"max": 1,"percent": 3},
+      {"min": 2,"max": 2,"percent": 4}, 
+      {"min": 3,"max": 3,"percent": 5}, 
+      {"min": 4,"max": 4,"percent": 23}, 
+      {"min": 5,"max": 5,"percent": 27},
+      {"min": 6,"max": 6,"percent": 23},
+      {"min": 7,"max": 7,"percent": 8},
+      {"min": 8,"max": 8,"percent": 7}
+    ]
+  },
+  "5": {
+    "fish_type": "SNAIL_FISH",
+    "range":[
+      {"min": 4,"max": 4,"percent": 10}, 
+      {"min": 5,"max": 5,"percent": 38},
+      {"min": 6,"max": 6,"percent": 26},
+      {"min": 7,"max": 7,"percent": 12},
+      {"min": 8,"max": 8,"percent": 6},
+      {"min": 9,"max": 9,"percent": 6},
+      {"min": 10,"max": 10,"percent": 2}
+    ]
+  },
+  "6": {
+    "fish_type": "FLAT_FISH",
+    "range":[
+      {"min": 5,"max": 5,"percent": 15},
+      {"min": 6,"max": 6,"percent": 26},
+      {"min": 7,"max": 7,"percent": 25},
+      {"min": 8,"max": 8,"percent": 29},
+      {"min": 9,"max": 9,"percent": 3},
+      {"min": 10,"max": 10,"percent": 2}
+    ]
+  },
+  "7": {
+    "fish_type": "LOBSTER",
+    "range":[
+      {"min": 6,"max": 6,"percent": 7},
+      {"min": 7,"max": 7,"percent": 11},
+      {"min": 8,"max": 8,"percent": 30},
+      {"min": 9,"max": 9,"percent": 24},
+      {"min": 10,"max": 10,"percent": 18},
+      {"min": 11,"max": 11,"percent": 5},
+      {"min": 12,"max": 12,"percent": 5}        
+    ]
+  },
+  "8": {
+    "fish_type": "SAIL_FISH",
+    "range":[      
+      {"min": 6,"max": 6,"percent": 8},
+      {"min": 7,"max": 7,"percent": 8},
+      {"min": 8,"max": 8,"percent": 10},
+      {"min": 9,"max": 9,"percent": 12},
+      {"min": 10,"max": 10,"percent": 20},
+      {"min": 11,"max": 11,"percent": 11},
+      {"min": 12,"max": 12,"percent": 9},
+      {"min": 13,"max": 13,"percent": 8},
+      {"min": 14,"max": 14,"percent": 4}        
+    ]
+  },
+  "9": {
+    "fish_type": "OCTOPUS",
+    "range":[      
+      {"min": 7,"max": 7,"percent": 5},
+      {"min": 8,"max": 8,"percent": 7},
+      {"min": 9,"max": 9,"percent": 10},
+      {"min": 10,"max": 10,"percent": 25},
+      {"min": 11,"max": 11,"percent": 28},
+      {"min": 12,"max": 12,"percent": 27},
+      {"min": 13,"max": 13,"percent": 10},
+      {"min": 14,"max": 14,"percent": 8},       
+      {"min": 15,"max": 15,"percent": 2}       
+    ]
+  },
+  "10": {
+    "fish_type": "ANGLER_FISH",
+    "range":[            
+      {"min": 10,"max": 10,"percent": 20},
+      {"min": 11,"max": 11,"percent": 22},
+      {"min": 12,"max": 12,"percent": 14},
+      {"min": 13,"max": 13,"percent": 14},
+      {"min": 14,"max": 14,"percent": 12},       
+      {"min": 15,"max": 15,"percent": 6},
+      {"min": 16,"max": 16,"percent": 5},
+      {"min": 17,"max": 17,"percent": 4},
+      {"min": 18,"max": 18,"percent": 5}
+    ]
+  },
+  "11": {
+    "fish_type": "SEA_TURTLE",
+    "range":[                  
+      {"min": 12,"max": 12,"percent": 4},
+      {"min": 13,"max": 13,"percent": 4},
+      {"min": 14,"max": 14,"percent": 5},       
+      {"min": 15,"max": 15,"percent": 15},
+      {"min": 16,"max": 16,"percent": 14},
+      {"min": 17,"max": 17,"percent": 20},
+      {"min": 18,"max": 18,"percent": 17},
+      {"min": 19,"max": 19,"percent": 9},
+      {"min": 20,"max": 23,"percent": 5}      
+    ]
+  },
+  "12": {
+    "fish_type": "SAWTOOTH_SHARK",
+    "range":[      
+      {"min": 10,"max": 15,"percent": 15}, 
+      {"min": 16,"max": 20,"percent": 32}, 
+      {"min": 21,"max": 25,"percent": 30},
+      {"min": 26,"max": 28,"percent": 23}
+    ]
+  },
+  "13": {
+    "fish_type": "MANTARAY",
+    "range":[
+      {"min": 10,"max": 15,"percent": 19}, 
+      {"min": 16,"max": 20,"percent": 34}, 
+      {"min": 21,"max": 25,"percent": 33},
+      {"min": 26,"max": 28,"percent": 14}
+    ]
+  },
+  "14": {
+    "fish_type": "GIANT_NEMO",
+    "range":[
+      {"min": 21,"max": 30,"percent": 13}, 
+      {"min": 31,"max": 40,"percent": 30}, 
+      {"min": 41,"max": 56,"percent": 42},
+      {"min": 57,"max": 80,"percent": 15}
+    ]
+  },
+  "15": {
+    "fish_type": "GIANT_BUTTERFLY",
+    "range":[
+      {"min": 21,"max": 30,"percent": 13}, 
+      {"min": 31,"max": 40,"percent": 30}, 
+      {"min": 41,"max": 56,"percent": 42},
+      {"min": 57,"max": 80,"percent": 15}
+    ]
+  },
+  "16": {
+    "fish_type": "GIANT_PUFFER_FISH",
+    "range":[
+      {"min": 21,"max": 30,"percent": 13}, 
+      {"min": 31,"max": 40,"percent": 30}, 
+      {"min": 41,"max": 56,"percent": 42},
+      {"min": 57,"max": 80,"percent": 15}
+    ]
+  },
+  "17": {
+    "fish_type": "SHARK",
+    "range":[
+      {"min": 36,"max": 50,"percent": 35}, 
+      {"min": 51,"max": 79,"percent": 48}, 
+      {"min": 80,"max": 90,"percent": 17}
+    ]
+  },
+  "18": {
+    "fish_type": "KILLER_WHALE",
+    "range":[      
+      {"min": 50,"max": 99,"percent": 10}, 
+      {"min": 100,"max": 124,"percent": 15}, 
+      {"min": 125,"max": 175,"percent": 32}, 
+      {"min": 176,"max": 200,"percent": 22},
+      {"min": 201,"max": 249,"percent": 16},
+      {"min": 250,"max": 300,"percent": 5}
+    ]
+  },
+  "19": {
+    "fish_type": "HUMPBACK_WHALE",
+    "range":[
+      {"min": 150,"max": 200,"percent": 8}, 
+      {"min": 201,"max": 249,"percent": 11},
+      {"min": 250,"max": 300,"percent": 20},
+      {"min": 300,"max": 400,"percent": 30},
+      {"min": 400,"max": 500,"percent": 20},
+      {"min": 501,"max": 550,"percent": 11}
+    ]
+  },  
+  "23": {
+    "fish_type": "EMPEROR_CRAB",
+    "range":[
+      {"min": 100,"max": 150,"percent": 5},
+      {"min": 151,"max": 400,"percent": 7}, 
+      {"min": 401,"max": 600,"percent": 17}, 
+      {"min": 601,"max": 750,"percent": 20}, 
+      {"min": 751,"max": 950,"percent": 25},
+      {"min": 951,"max": 1200,"percent": 24}
+    ]
+  },
+  "25": {
+    "fish_type": "ANCIENT_CROCODILE",
+    "range":[
+      {"min": 100,"max": 150,"percent": 5},
+      {"min": 151,"max": 400,"percent": 7}, 
+      {"min": 401,"max": 600,"percent": 17}, 
+      {"min": 601,"max": 750,"percent": 20}, 
+      {"min": 751,"max": 950,"percent": 25},
+      {"min": 951,"max": 1200,"percent": 24}
+    ]
+  },
+  "26": {
+    "fish_type": "THUNDER_DRAGON",
+    "range":[
+      {"min": 100,"max": 150,"percent": 3},
+      {"min": 151,"max": 400,"percent": 4}, 
+      {"min": 401,"max": 600,"percent": 12}, 
+      {"min": 601,"max": 750,"percent": 15}, 
+      {"min": 751,"max": 950,"percent": 25},
+      {"min": 951,"max": 1200,"percent": 28},
+      {"min": 1201,"max": 1400,"percent": 10},
+      {"min": 1401,"max": 1600,"percent": 3}
+    ]
+  },
+  "27": {
+    "fish_type": "CRAB_BOMB",
+    "range":[
+      {"min": 125,"max": 175,"percent": 25}, 
+      {"min": 176,"max": 200,"percent": 27},
+      {"min": 201,"max": 249,"percent": 20},
+      {"min": 250,"max": 350,"percent": 18},
+      {"min": 350,"max": 450,"percent": 10}
+    ]
+  },
+  "28": {
+    "fish_type": "CRAB_LASER",
+    "range":[
+      {"min": 125,"max": 175,"percent": 25}, 
+      {"min": 176,"max": 200,"percent": 27},
+      {"min": 201,"max": 249,"percent": 20},
+      {"min": 250,"max": 350,"percent": 18},
+      {"min": 350,"max": 450,"percent": 10}
+    ]
+  },
+  "29": {
+    "fish_type": "CRAB_DRILL",
+    "range":[
+      {"min": 350,"max": 450,"percent": 27},
+      {"min": 450,"max": 500,"percent": 20},
+      {"min": 500,"max": 550,"percent": 18},
+      {"min": 550,"max": 600,"percent": 25},
+      {"min": 600,"max": 650,"percent": 10}
+    ]
+  },
+  "30": {
+    "fish_type": "CRAB_WHEEL",
+    "range":[
+      {"min": 50,"max": 80,"percent": 18}, 
+      {"min": 81,"max": 110,"percent": 27}, 
+      {"min": 111,"max": 140,"percent": 20}, 
+      {"min": 141,"max": 150,"percent": 27},
+      {"min": 151,"max": 190,"percent": 13},
+      {"min": 191,"max": 230,"percent": 5}
+    ]
+  },
+  "31": {
+    "fish_type": "CRAB_QUAKE",
+    "range":[
+      {"min": 50,"max": 80,"percent": 15}, 
+      {"min": 81,"max": 110,"percent": 20}, 
+      {"min": 111,"max": 140,"percent": 20}, 
+      {"min": 141,"max": 150,"percent": 22},
+      {"min": 151,"max": 190,"percent": 15},
+      {"min": 191,"max": 230,"percent": 8}
+    ]
+  },  
+  "34": {
+    "fish_type": "MERMAID",
+    "range":[
+      {"min": 10,"max": 49,"percent": 5},
+      {"min": 50,"max": 100,"percent": 5}, 
+      {"min": 101,"max": 149,"percent": 8}, 
+      {"min": 150,"max": 200,"percent": 8}, 
+      {"min": 201,"max": 249,"percent": 11},
+      {"min": 250,"max": 300,"percent": 12},
+      {"min": 300,"max": 400,"percent": 9},
+      {"min": 400,"max": 500,"percent": 12},
+      {"min": 501,"max": 550,"percent": 11},
+      {"min": 550,"max": 600,"percent": 8},
+      {"min": 601,"max": 700,"percent": 11}
+    ]
+  },   
+  "35": {
+    "fish_type": "BLAZING_PHONEIX",
+    "range":[
+      {"min": 50,"max": 149,"percent": 4},
+      {"min": 150,"max": 300,"percent": 6}, 
+      {"min": 301,"max": 450,"percent": 10}, 
+      {"min": 451,"max": 600,"percent": 15}, 
+      {"min": 601,"max": 750,"percent": 24},
+      {"min": 751,"max": 900,"percent": 18},
+      {"min": 901,"max": 1000,"percent": 16},
+      {"min": 1001,"max": 1200,"percent": 5},
+      {"min": 1201,"max": 1300,"percent": 2}
+    ]
+  },
+  "40": {
+    "fish_type": "BUFFALO",
+    "range":[
+      {"min": 50,"max": 200,"percent": 8},
+      {"min": 201,"max": 300,"percent": 12}, 
+      {"min": 301,"max": 499,"percent": 15}, 
+      {"min": 500,"max": 700,"percent": 22}, 
+      {"min": 701,"max": 850,"percent": 12},
+      {"min": 851,"max": 1000,"percent": 15},
+      {"min": 1001,"max": 1200,"percent": 8},
+      {"min": 1201,"max": 1500,"percent": 8}
+    ]
+  },
+  "203": {
+    "fish_type": "NEMO",
+    "range":[
+      {"min": 20,"max": 49,"percent": 15},
+      {"min": 50,"max": 80,"percent": 15}, 
+      {"min": 81,"max": 110,"percent": 25}, 
+      {"min": 111,"max": 140,"percent": 10}, 
+      {"min": 141,"max": 150,"percent": 15},
+      {"min": 151,"max": 190,"percent": 13},
+      {"min": 191,"max": 230,"percent": 7}
+    ]
+  },
+  "204": {
+    "fish_type": "PUFFER_FISH",
+    "range":[
+      {"min": 20,"max": 49,"percent": 10},
+      {"min": 50,"max": 80,"percent": 15}, 
+      {"min": 81,"max": 110,"percent": 25}, 
+      {"min": 111,"max": 140,"percent": 18}, 
+      {"min": 141,"max": 150,"percent": 14},
+      {"min": 151,"max": 190,"percent": 13},
+      {"min": 191,"max": 230,"percent": 5}
+    ]
+  },
+  "205": {
+    "fish_type": "LOBSTER",
+    "range":[
+      {"min": 20,"max": 49,"percent": 10},
+      {"min": 50,"max": 80,"percent": 15}, 
+      {"min": 81,"max": 110,"percent": 25}, 
+      {"min": 111,"max": 140,"percent": 18}, 
+      {"min": 141,"max": 150,"percent": 14},
+      {"min": 151,"max": 190,"percent": 13},
+      {"min": 191,"max": 230,"percent": 5}
+    ]
+  },
+  "206": {
+    "fish_type": "FLAT_FISH",
+    "range":[
+      {"min": 20,"max": 49,"percent": 10},
+      {"min": 50,"max": 80,"percent": 15}, 
+      {"min": 81,"max": 110,"percent": 25}, 
+      {"min": 111,"max": 140,"percent": 18}, 
+      {"min": 141,"max": 150,"percent": 14},
+      {"min": 151,"max": 190,"percent": 13},
+      {"min": 191,"max": 230,"percent": 5}
+    ]
+  },
+  "207": {
+    "fish_type": "CRAB",
+    "range":[
+      {"min": 20,"max": 49,"percent": 10},
+      {"min": 50,"max": 80,"percent": 15}, 
+      {"min": 81,"max": 110,"percent": 25}, 
+      {"min": 111,"max": 140,"percent": 18}, 
+      {"min": 141,"max": 150,"percent": 14},
+      {"min": 151,"max": 190,"percent": 13},
+      {"min": 191,"max": 230,"percent": 5}
+    ]
+  },
+  "208": {
+    "fish_type": "SAIL_FISH",
+    "range":[
+      {"min": 20,"max": 49,"percent": 10},
+      {"min": 50,"max": 80,"percent": 15}, 
+      {"min": 81,"max": 110,"percent": 25}, 
+      {"min": 111,"max": 140,"percent": 18}, 
+      {"min": 141,"max": 150,"percent": 14},
+      {"min": 151,"max": 190,"percent": 13},
+      {"min": 191,"max": 230,"percent": 5}
+    ]
+  },
+  "209": {
+    "fish_type": "OCOTOPUS",
+    "range":[
+      {"min": 20,"max": 49,"percent": 10},
+      {"min": 50,"max": 80,"percent": 15}, 
+      {"min": 81,"max": 110,"percent": 25}, 
+      {"min": 111,"max": 140,"percent": 18}, 
+      {"min": 141,"max": 150,"percent": 14},
+      {"min": 151,"max": 190,"percent": 13},
+      {"min": 191,"max": 230,"percent": 5}
+    ]
+  },
+  "210": {
+    "fish_type": "ANGLER_FISH",
+    "range":[
+      {"min": 20,"max": 49,"percent": 10},
+      {"min": 50,"max": 80,"percent": 15}, 
+      {"min": 81,"max": 110,"percent": 25}, 
+      {"min": 111,"max": 140,"percent": 18}, 
+      {"min": 141,"max": 150,"percent": 14},
+      {"min": 151,"max": 190,"percent": 13},
+      {"min": 191,"max": 230,"percent": 5}
+    ]
+  }, 
+  "211": {
+    "fish_type": "SEA_TURTLE",
+    "range":[
+      {"min": 20,"max": 49,"percent": 10},
+      {"min": 50,"max": 80,"percent": 15}, 
+      {"min": 81,"max": 110,"percent": 25}, 
+      {"min": 111,"max": 140,"percent": 18}, 
+      {"min": 141,"max": 150,"percent": 14},
+      {"min": 151,"max": 190,"percent": 13},
+      {"min": 191,"max": 230,"percent": 5}
+    ]
+  },
+  "303": {
+    "fish_type": "NEMO",
+    "range":[
+      {"min": 20,"max": 49,"percent": 10},
+      {"min": 50,"max": 80,"percent": 15}, 
+      {"min": 81,"max": 110,"percent": 25}, 
+      {"min": 111,"max": 140,"percent": 18}, 
+      {"min": 141,"max": 150,"percent": 14},
+      {"min": 151,"max": 190,"percent": 13},
+      {"min": 191,"max": 230,"percent": 5}
+    ]
+  },
+  "304": {
+    "fish_type": "PUFFER_FISH",
+    "range":[
+      {"min": 20,"max": 49,"percent": 10},
+      {"min": 50,"max": 80,"percent": 15}, 
+      {"min": 81,"max": 110,"percent": 25}, 
+      {"min": 111,"max": 140,"percent": 18}, 
+      {"min": 141,"max": 150,"percent": 14},
+      {"min": 151,"max": 190,"percent": 13},
+      {"min": 191,"max": 230,"percent": 5}
+    ]
+  },
+  "305": {
+    "fish_type": "LOBSTER",
+    "range":[
+      {"min": 20,"max": 49,"percent": 10},
+      {"min": 50,"max": 80,"percent": 15}, 
+      {"min": 81,"max": 110,"percent": 25}, 
+      {"min": 111,"max": 140,"percent": 18}, 
+      {"min": 141,"max": 150,"percent": 14},
+      {"min": 151,"max": 190,"percent": 13},
+      {"min": 191,"max": 230,"percent": 5}
+    ]
+  },
+  "306": {
+    "fish_type": "FLAT_FISH",
+    "range":[
+      {"min": 20,"max": 49,"percent": 10},
+      {"min": 50,"max": 80,"percent": 15}, 
+      {"min": 81,"max": 110,"percent": 25}, 
+      {"min": 111,"max": 140,"percent": 18}, 
+      {"min": 141,"max": 150,"percent": 14},
+      {"min": 151,"max": 190,"percent": 13},
+      {"min": 191,"max": 230,"percent": 5}
+    ]
+  },
+  "307": {
+    "fish_type": "CRAB",
+    "range":[
+      {"min": 20,"max": 49,"percent": 10},
+      {"min": 50,"max": 80,"percent": 15}, 
+      {"min": 81,"max": 110,"percent": 25}, 
+      {"min": 111,"max": 140,"percent": 18}, 
+      {"min": 141,"max": 150,"percent": 14},
+      {"min": 151,"max": 190,"percent": 13},
+      {"min": 191,"max": 230,"percent": 5}
+    ]
+  },
+  "308": {
+    "fish_type": "SAIL_FISH",
+    "range":[
+      {"min": 20,"max": 49,"percent": 10},
+      {"min": 50,"max": 80,"percent": 15}, 
+      {"min": 81,"max": 110,"percent": 25}, 
+      {"min": 111,"max": 140,"percent": 18}, 
+      {"min": 141,"max": 150,"percent": 14},
+      {"min": 151,"max": 190,"percent": 13},
+      {"min": 191,"max": 230,"percent": 5}
+    ]
+  },
+  "309": {
+    "fish_type": "OCOTOPUS",
+    "range":[
+      {"min": 20,"max": 49,"percent": 10},
+      {"min": 50,"max": 80,"percent": 15}, 
+      {"min": 81,"max": 110,"percent": 25}, 
+      {"min": 111,"max": 140,"percent": 18}, 
+      {"min": 141,"max": 150,"percent": 14},
+      {"min": 151,"max": 190,"percent": 13},
+      {"min": 191,"max": 230,"percent": 5}
+    ]
+  },
+  "310": {
+    "fish_type": "ANGLER_FISH",
+    "range":[
+      {"min": 20,"max": 49,"percent": 10},
+      {"min": 50,"max": 80,"percent": 15}, 
+      {"min": 81,"max": 110,"percent": 25}, 
+      {"min": 111,"max": 140,"percent": 18}, 
+      {"min": 141,"max": 150,"percent": 14},
+      {"min": 151,"max": 190,"percent": 13},
+      {"min": 191,"max": 230,"percent": 5}
+    ]
+  },
+  "311": {
+    "fish_type": "SEA_TURTLE",
+    "range":[
+      {"min": 20,"max": 49,"percent": 10},
+      {"min": 50,"max": 80,"percent": 15}, 
+      {"min": 81,"max": 110,"percent": 25}, 
+      {"min": 111,"max": 140,"percent": 18}, 
+      {"min": 141,"max": 150,"percent": 14},
+      {"min": 151,"max": 190,"percent": 13},
+      {"min": 191,"max": 230,"percent": 5}
+    ]
+  }     
+}

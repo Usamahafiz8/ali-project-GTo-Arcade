@@ -1,0 +1,89 @@
+.dropdown .dropdown-backdrop {
+    display: none;
+}
+
+.icon-wide {
+    margin: 0 10px;
+}
+
+.alert ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.alert ul li {
+    margin: 0;
+    padding: 0;
+}
+
+span.required {
+    color: #e00;
+}
+
+div.errorMessage {
+    font-size: small;
+    color: #cc0000;
+    margin-top: 2px;
+}
+
+div.jquery-error-message label.error {
+    font-size: small;
+    color: #cc0000;
+    margin-top: 2px;
+}
+
+.icon-wide {
+    margin: 0 10px;
+}
+
+.modal form {
+    margin: 0;
+    padding: 0;
+}
+
+select {
+    height: 20px !important;
+    box-sizing: content-box !important;
+    -moz-box-sizing: content-box !important;
+    -ms-box-sizing: content-box !important;
+}
+
+.control-group {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.tree-line,
+.tree-last,
+.tree-plus,
+.tree-minus {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-top: 1px;
+    *margin-right: .3em;
+    line-height: 15px;
+    vertical-align: text-top;
+    background-repeat: no-repeat;
+}
+
+.tree-line {
+    background-image: url(/images/mnu-dots.gif);
+}
+
+.tree-last {
+    background-image: url(/images/mnu-dots-end.gif);
+}
+
+.tree-plus {
+    background-image: url(/images/mnu-plus.gif);
+}
+
+.tree-minus {
+    background-image: url(/images/mnu-minus.gif);
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
